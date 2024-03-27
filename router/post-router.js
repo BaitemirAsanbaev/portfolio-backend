@@ -1,15 +1,14 @@
 const Router = require("express").Router
-const router = new Router()
-// const {body} = require("express-validator")
+const postRouter = new Router()
 const accessMiddleware = require('..//middleware/access-middleware')
 const postController = require("../controller/post-controller")
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 
-router.post('/create',upload.single('image'), accessMiddleware, postController.createPost)
-router.get('/all', postController.getAllPosts)
-router.get('/:id', accessMiddleware, postController.getOneById)
-router.put('/update/:id',upload.single('image'), accessMiddleware, postController.updatePost)
-router.delete('/delete/:id', accessMiddleware, postController.deletePost)
+postRouter.post('/create',upload.single('image'), accessMiddleware, postController.createPost)
+postRouter.get('/all', postController.getAllPosts)
+postRouter.get('/:id', accessMiddleware, postController.getOneById)
+postRouter.put('/update/:id',upload.single('image'), accessMiddleware, postController.updatePost)
+postRouter.delete('/delete/:id', accessMiddleware, postController.deletePost)
 
-module.exports = router
+module.exports = postRouter

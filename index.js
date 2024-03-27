@@ -3,7 +3,7 @@ const express = require("express")
 const cors = require("cors")
 const mongoose = require("mongoose")
 const PORT = process.env.PORT || 5000
-const router = require("./router/post-router")
+const router = require("./router/index-router")
 const errorMiddleware = require("./middleware/error-middleware")
 const bodyParser = require("body-parser")
 
@@ -18,7 +18,7 @@ app.use(cors({
     credentials:true,
     origin: process.env.CLIENT_URL
 }))
-app.use("/post", router)
+app.use("/api/v1", router)
 app.use(errorMiddleware)
 
 const start = async () => {

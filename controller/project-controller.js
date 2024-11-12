@@ -12,8 +12,7 @@ class ProjectController {
             }
             const image = req.file
             const project = req.body
-            project.image = {data:image.path, contentType:image.mimetype}
-            const response = await projectService.createProject(project)
+            const response = await projectService.createProject(image, project)
             return res.json(response)
         } catch (e) {
             next(e)
@@ -67,10 +66,9 @@ class ProjectController {
                 return res.status(400).json({message: "Invalid ID format"});
             }
 
-            const image = req.file
+            const image = req.files
             const project = req.body
-            project.image = {data:image.path, contentType:image.mimetype}
-            const response = await projectService.updateProject(id, project)
+            const response = await projectService.updateProject(id, image, project)
 
             if (!response) {
                 return res.status(404).json({message: "Project not found"});

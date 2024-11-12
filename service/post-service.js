@@ -1,12 +1,11 @@
-const postModel = require('../models/post-model')
+const postModel = require('../models/post-model');
+const fileService = require('./fileService');
 
 class PostService {
     async createPost(image, text) {
+        const imagePath = fileService.saveFile(image);
         return await postModel.create({
-            image: {
-                data: image.path,
-                contentType: image.mimetype
-            }, text
+            image: imagePath, text
         });
     }
 
@@ -18,12 +17,10 @@ class PostService {
         return postModel.findById(id);
     }
 
-    async updatePost(id, {image, text}) {
+    async updatePost(id, {image, text}) {        
+        const imagePath = fileService.saveFile(image);
         return postModel.findByIdAndUpdate(id, {
-            image: {
-                data: image.path,
-                contentType: image.mimetype
-            }, text
+            image: imagePath, text
         }, {new: true});
     }
 

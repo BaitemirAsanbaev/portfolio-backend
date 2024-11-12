@@ -1,8 +1,10 @@
-const projectModel = require('../models/project-model')
+const projectModel = require('../models/project-model');
+const fileService = require('./fileService');
 
 class ProjectService {
-    async createProject(project) {
-        return await projectModel.create(project);
+    async createProject(image, project) {
+        const imagePath = fileService.saveFile(image);
+        return await projectModel.create({...project, image:imagePath});
     }
 
     async getAllProjects() {
@@ -13,8 +15,9 @@ class ProjectService {
         return projectModel.findById(id);
     }
 
-    async updateProject(id, project) {
-        return projectModel.findByIdAndUpdate(id, project, {new: true});
+    async updateProject(id, image, project) {
+        const imagePath = fileService.saveFile(image);
+        return projectModel.findByIdAndUpdate(id, {...project, image:imagePath}, {new: true});
     }
 
     async deleteProject(id) {

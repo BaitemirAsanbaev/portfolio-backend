@@ -11,7 +11,7 @@ class PostController{
                 return next(new ApiErrors("validation error", errors.array()))
             }
             const{ text } = req.body
-            const image = req.file
+            const image = req.files
             const response = await postService.createPost(image, text)
             return res.json(response)
         }
@@ -67,8 +67,7 @@ class PostController{
             }
 
             const{ text } = req.body
-            const image = req.file
-            console.log({text, image})
+            const image = req.files
             const response = await postService.updatePost(id, {image, text})
 
             if (!response) {
